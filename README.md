@@ -31,3 +31,15 @@ $ npm stop
 
 
 [egg]: https://eggjs.org
+
+
+> use i18n-fe
+switched to db i18n-fe
+>
+> db.createUser(
+...   {
+...     user: "suibu",
+...     pwd: "123456",
+...     roles: [ { role: "dbAdmin", db: "i18n-fe" } ]
+...   }
+... )
