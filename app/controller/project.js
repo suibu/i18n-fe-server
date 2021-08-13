@@ -4,28 +4,12 @@ const Controller = require('egg').Controller;
 const { connectDb } = require('../libs/utils');
 
 const mongoose = connectDb();
-// 数据库模型
 let projectSchema = new mongoose.Schema({
   name: String,
   npmName: String,
+  version: String
 });
-// 使用哪张表
-let projectModel = mongoose.model('project', projectSchema);
-const projectModel_find = () => {
-  return new Promise((resolve, reject) => {
-    projectModel.find({ }, (err, docs) => {
-      if (!err) {
-        console.log(docs);
-        resolve(docs);
-      } else {
-        reject(err);
-      }
-    });
-  });
-}
-
-
-
+const Project = mongoose.model('project', projectSchema);
 class ProjectController extends Controller {
   async index() {
     const { ctx } = this;
@@ -34,8 +18,13 @@ class ProjectController extends Controller {
 
   // 获取项目或者组件的项目模板
   async getTemplate() {
+
+
     const { ctx } = this;
-    const data = await projectModel_find();
+    const data = await Project.find({}, function (err, res) {
+      console.log('res',res);
+    }).skip(2).limit(2);
+
     ctx.body = data;
   }
 }
